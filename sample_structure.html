@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Excel Structure - Enhanced Allocation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sheet-example {
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .sheet-title {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .sheet-description {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #e9ecef;
+            font-weight: bold;
+        }
+        .highlight {
+            background: #fff3cd;
+            font-weight: bold;
+        }
+        .note {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .note h4 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        .preference-setting {
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .preference-setting h4 {
+            margin-top: 0;
+            color: #2d5a2d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Enhanced Allocation System - Expected Excel Structure</h1>
+        
+        <div class="note">
+            <h4>🔄 Key Changes from Original System:</h4>
+            <ul>
+                <li><strong>Warehouse Inventory:</strong> Now has two quantity columns (Retail Location & Retail Return Location)</li>
+                <li><strong>Global Preference Setting:</strong> Simple dropdown to set allocation preference for all items</li>
+                <li><strong>Enhanced Output:</strong> Shows allocation breakdown from each source</li>
+            </ul>
+        </div>
+
+        <div class="sheet-example">
+            <div class="sheet-title">🛒 Store Orders Sheet</div>
+            <div class="sheet-description">
+                Contains store order requests with Store_ID, Item_ID, and Quantity_Requested
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Store_ID</th>
+                        <th>Item_ID</th>
+                        <th>Quantity_Requested</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>STORE001</td>
+                        <td>ITEM001</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>STORE002</td>
+                        <td>ITEM002</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>STORE003</td>
+                        <td>ITEM001</td>
+                        <td>25</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sheet-example">
+            <div class="sheet-title">🏭 Warehouse Inventory Sheet</div>
+            <div class="sheet-description">
+                Contains inventory levels with two quantity columns for different locations
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item_ID</th>
+                        <th class="highlight">Retail_Location_Quantity</th>
+                        <th class="highlight">Retail_Return_Location_Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ITEM001</td>
+                        <td>100</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>ITEM002</td>
+                        <td>50</td>
+                        <td>75</td>
+                    </tr>
+                    <tr>
+                        <td>ITEM003</td>
+                        <td>0</td>
+                        <td>40</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sheet-example">
+            <div class="sheet-title">⭐ Store Priority Sheet</div>
+            <div class="sheet-description">
+                Defines priority order for stores (1 = highest priority)
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Store_ID</th>
+                        <th>Priority_Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>STORE001</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>STORE002</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>STORE003</td>
+                        <td>3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="preference-setting">
+            <h4>🔄 Global Allocation Preference Setting</h4>
+            <p>In the web interface, you'll select one of these options that applies to ALL items:</p>
+            <ul>
+                <li><strong>Retail Location First (Retail → Return):</strong> Allocate from retail location first, then from return location if needed</li>
+                <li><strong>Retail Return Location First (Return → Retail):</strong> Allocate from return location first, then from retail location if needed</li>
+            </ul>
+            <p><em>This preference is applied consistently across all items during allocation.</em></p>
+        </div>
+
+        <div class="sheet-example">
+            <div class="sheet-title">📊 Expected Output - Item Allocation Sheet</div>
+            <div class="sheet-description">
+                Enhanced output showing allocation breakdown from each source
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Store_ID</th>
+                        <th>Item_ID</th>
+                        <th>Requested_Quantity</th>
+                        <th>Allocated_Quantity</th>
+                        <th class="highlight">Allocated_From_Retail_Location</th>
+                        <th class="highlight">Allocated_From_Return_Location</th>
+                        <th>Store_Priority</th>
+                        <th>Global_Preference</th>
+                        <th>Allocation_Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>STORE001</td>
+                        <td>ITEM001</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2024-01-15</td>
+                    </tr>
+                    <tr>
+                        <td>STORE002</td>
+                        <td>ITEM002</td>
+                        <td>30</td>
+                        <td>30</td>
+                        <td>0</td>
+                        <td>30</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2024-01-15</td>
+                    </tr>
+                    <tr>
+                        <td>STORE003</td>
+                        <td>ITEM001</td>
+                        <td>25</td>
+                        <td>25</td>
+                        <td>25</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>2024-01-15</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="note">
+            <h4>💡 How the Enhanced Allocation Works:</h4>
+            <ol>
+                <li><strong>Priority Processing:</strong> Orders are processed by store priority (1 = highest)</li>
+                <li><strong>Global Preference-Based Allocation:</strong> For all items, allocation follows the global preference:
+                    <ul>
+                        <li>Preference 1: Retail Location → Retail Return Location</li>
+                        <li>Preference 2: Retail Return Location → Retail Location</li>
+                    </ul>
+                </li>
+                <li><strong>Source Tracking:</strong> The system tracks how many units come from each source</li>
+                <li><strong>Enhanced Output:</strong> Shows detailed breakdown of allocations from each location</li>
+                <li><strong>Simplified Setup:</strong> No need for individual item preference sheets - one global setting applies to all items</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html> 
