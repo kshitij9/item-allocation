@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Inventory Allocation System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="excel_web_processor.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏪 Store Inventory Allocation System</h1>
+            <p>Upload store orders, warehouse inventory, and store priorities to get optimal allocation</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3>📋 How to Use This System</h3>
+                <ul>
+                    <li><strong>Store Orders Sheet:</strong> Contains columns like Store_ID, Item_ID, Quantity_Requested</li>
+                    <li><strong>Warehouse Inventory Sheet:</strong> Contains columns like Item_ID, Retail_Location_Quantity, Retail_Return_Location_Quantity</li>
+                    <li><strong>Store Priority Sheet:</strong> Contains columns like Store_ID, Priority_Level (1=highest priority)</li>
+                    <li>The system will allocate items to stores based on availability, priority order, and global preference</li>
+                </ul>
+            </div>
+            
+            <!-- Upload Section -->
+            <div class="upload-section" id="uploadSection">
+                <h2>📁 Upload Excel File</h2>
+                <p>Upload an Excel file containing your store orders, warehouse inventory, and store priorities</p>
+                <br>
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    Choose Excel File
+                </button>
+                <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls" />
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+            
+            <!-- Sheet Mapping Section -->
+            <div class="sheet-mapping-section" id="sheetMappingSection">
+                <h2>🔗 Map Your Data Sheets</h2>
+                <div class="sheet-info" id="sheetInfo"></div>
+                
+                <div class="sheet-mapping">
+                    <h3>📊 Sheet and Column Mapping</h3>
+                    <p>Please map your Excel sheets to the required data types and specify the column names:</p>
+                    
+                    <div class="mapping-grid">
+                        <!-- Store Orders Mapping -->
+                        <div class="mapping-card">
+                            <h4>🛒 Store Orders</h4>
+                            <label>Select Sheet:</label>
+                            <select id="ordersSheet">
+                                <option value="">-- Select Sheet --</option>
+                            </select>
+                            
+                            <div class="column-mapping">
+                                <label>Store ID Column:</label>
+                                <select id="ordersStoreCol">
+                                    <option value="">-- Select Column --</option>
+                                </select>
+                                
+                                <label>Item ID Column:</label>
+                                <select id="ordersItemCol">
+                                    <option value="">-- Select Column --</option>
+                                </select>
+                                
+                                <label>Quantity Requested Column:</label>
+                                <select id="ordersQuantityCol">
+                                    <option value="">-- Select Column --</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Warehouse Inventory Mapping -->
+                        <div class="mapping-card">
+                            <h4>🏭 Warehouse Inventory</h4>
+                            <label>Select Sheet:</label>
+                            <select id="inventorySheet">
+                                <option value="">-- Select Sheet --</option>
+                            </select>
+                            
+                            <div class="column-mapping">
+                                <label>Item ID Column:</label>
+                                <select id="inventoryItemCol">
+                                    <option value="">-- Select Column --</option>
+                                </select>
+                                
+                                <label>Retail Location Quantity Column:</label>
+                                <select id="inventoryRetailQuantityCol">
+                                    <option value="">-- Select Column --</option>
+                                </select>
+                                
+                                <label>Retail Return Location Quantity Column:</label>
+                                <select id="inventoryReturnQuantityCol">
+                                    <option value="">-- Select Column --</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Store Priority Mapping -->
+                        <div class="mapping-card">
+                            <h4>⭐ Store Priority</h4>
+                            <label>Select Sheet:</label>
+                            <select id="prioritySheet">
+                                <option value="">-- Select Sheet --</option>
+                            </select>
+                            
+                            <div class="column-mapping">
+                                <label>Store ID Column:</label>
+                                <select id="priorityStoreCol">
+                                    <option value="">-- Select Column --</option>
+                                </select>
+                                
+                                <label>Priority Level Column:</label>
+                                <select id="priorityLevelCol">
+                                    <option value="">-- Select Column --</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Global Preference Setting -->
+                        <div class="mapping-card">
+                            <h4>🔄 Global Allocation Preference</h4>
+                            <div class="column-mapping">
+                                <label>Allocation Preference:</label>
+                                <select id="globalPreference">
+                                    <option value="1">Retail Location First (Retail → Return)</option>
+                                    <option value="2">Retail Return Location First (Return → Retail)</option>
+                                </select>
+                                <small>This preference will be applied to all items during allocation</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="process-btn" id="processBtn" onclick="processAllocation()" disabled>
+                        🚀 Calculate Allocation
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <!-- Allocation Summary -->
+            <div class="allocation-summary" id="allocationSummary">
+                <h3>📈 Allocation Summary</h3>
+                <div class="summary-grid" id="summaryGrid"></div>
+            </div>
+            
+            <!-- Download Section -->
+            <div class="download-section" id="downloadSection">
+                <h2>✅ Allocation Complete!</h2>
+                <p>Your inventory allocation has been calculated and is ready for download.</p>
+                <br>
+                <button class="download-btn" onclick="downloadFile()">
+                    💾 Download Allocation Results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="excel_web_processor.js"></script>
+</body>
+</html> 
